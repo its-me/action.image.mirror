@@ -1,0 +1,34 @@
+name: Image mirror
+description: Copy each of a set of tags from one image repository to another via `docker buildx imagetools create`.
+author: Sergey Kanafyev
+
+branding:
+  icon: copy
+  color: blue
+
+inputs:
+  source:
+    description: Source image repository, e.g. "ghcr.io/its-me/workflow".
+    required: true
+  destination:
+    description: Destination image repository, e.g. "1tsme/workflow" or "quay.io/itsme/workflow".
+    required: true
+  tags:
+    description: Whitespace-separated list of tag names to copy from source to destination.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Mirror image
+      shell: bash
+      env:
+        SOURCE: ${{ inputs.source }}
+        DESTINATION: ${{ inputs.destination }}
+        TAGS: ${{ inputs.tags }}
+      run: |
+        for tag in $TAGS; do
+          docker buildx imagetools create \
+            --tag "$DESTINATION:$tag" \
+            "$SOURCE:$tag"
+        done

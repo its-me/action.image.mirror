@@ -10,8 +10,28 @@ inputs:
   source:
     description: Source image repository, e.g. "ghcr.io/its-me/workflow".
     required: true
+  source-registry:
+    description: Registry hostname to log in to for the source image, e.g. "ghcr.io". Leave unset to log in to Docker Hub.
+    required: false
+    default: ""
+  source-username:
+    description: Username for logging in to the source registry.
+    required: true
+  source-password:
+    description: Password or token for logging in to the source registry.
+    required: true
   destination:
     description: Destination image repository, e.g. "1tsme/workflow" or "quay.io/itsme/workflow".
+    required: true
+  destination-registry:
+    description: Registry hostname to log in to for the destination image, e.g. "quay.io". Leave unset to log in to Docker Hub.
+    required: false
+    default: ""
+  destination-username:
+    description: Username for logging in to the destination registry.
+    required: true
+  destination-password:
+    description: Password or token for logging in to the destination registry.
     required: true
   tags:
     description: Whitespace-separated list of tag names to copy from source to destination.
@@ -20,6 +40,20 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Log in to source registry
+      uses: docker/login-action@v4
+      with:
+        registry: ${{ inputs.source-registry }}
+        username: ${{ inputs.source-username }}
+        password: ${{ inputs.source-password }}
+
+    - name: Log in to destination registry
+      uses: docker/login-action@v4
+      with:
+        registry: ${{ inputs.destination-registry }}
+        username: ${{ inputs.destination-username }}
+        password: ${{ inputs.destination-password }}
+
     - name: Mirror image
       shell: bash
       env:

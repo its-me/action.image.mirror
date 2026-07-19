@@ -1,4 +1,4 @@
-name: Image mirror
+name: Cross-registry image mirror
 description: Copy each of a set of tags from one image repository to another via `docker buildx imagetools create`.
 author: Sergey Kanafyev
 

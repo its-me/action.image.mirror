@@ -19,7 +19,7 @@ push-hub:
   permissions:
     packages: read
   steps:
-    - uses: its-me/action.image.mirror@v1
+    - uses: its-me/action.image.mirror@v0
       with:
         source: ghcr.io/its-me/workflow
         source-registry: ghcr.io

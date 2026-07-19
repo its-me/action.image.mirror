@@ -1,4 +1,4 @@
-# action.image.mirror
+# Image mirror
 
 A GitHub Action that logs in to a source and destination registry, then
 copies each of a set of tags from one image repository to another via

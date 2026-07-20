@@ -50,6 +50,4 @@ For a Quay.io destination, set `destination-registry: quay.io` and point
 
 ## License
 
-This project is licensed under the MIT License.
-
-See [LICENSE](LICENSE) for the full text.
+[MIT](LICENSE)
